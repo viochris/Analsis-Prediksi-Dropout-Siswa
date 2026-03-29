@@ -25,6 +25,9 @@ Jaya Jaya Institut adalah institusi pendidikan tinggi yang telah berdiri sejak t
 - Pengembangan model machine learning untuk memprediksi risiko dropout
 - Deployment prototype aplikasi prediksi berbasis Streamlit
 
+### Link Github
+> 🔗 **Link Github:** [https://github.com/viochris/Analsis-Prediksi-Dropout-Siswa](https://github.com/viochris/Analsis-Prediksi-Dropout-Siswa)
+
 ### Persiapan
 
 **Sumber data:** [Students' Performance Dataset - Dicoding](https://raw.githubusercontent.com/dicodingacademy/dicoding_dataset/main/students_performance/data.csv)
@@ -70,7 +73,7 @@ Aplikasi akan berjalan di `http://localhost:8501`
 
 ### Akses Online (Streamlit Community Cloud)
 
-🔗 **Link Prototype:** [https://jaya-jaya-dropout-silvio.streamlit.app](https://jaya-jaya-dropout-silvio.streamlit.app)
+🔗 **Link Prototype:** [https://jaya-jaya-dropout-silvio.streamlit.app](https://jaya-jaya-dropout-silvio.streamlit.app/)
 
 ### Cara Menggunakan Aplikasi
 
@@ -114,3 +117,4 @@ Berdasarkan analisis data dan model machine learning yang dikembangkan, ditemuka
 - **Program Dukungan untuk Mahasiswa Dewasa**: Buat program khusus untuk mahasiswa yang mendaftar di usia lebih tua (25+ tahun), seperti jadwal kelas yang fleksibel atau program part-time, mengingat kelompok ini memiliki risiko dropout lebih tinggi
 
 - **Perluasan Program Beasiswa**: Tingkatkan jumlah dan akses beasiswa mengingat perbedaan yang sangat besar antara penerima beasiswa di kelompok Graduate (37.8%) vs Dropout (9.4%). Beasiswa terbukti jadi faktor protektif yang kuat
+
