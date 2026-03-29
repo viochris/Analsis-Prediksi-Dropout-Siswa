@@ -33,11 +33,21 @@ with col1:
     marital_status = st.selectbox("Status Pernikahan",
                                    options=[1, 2, 3, 4, 5, 6],
                                    format_func=lambda x: {1:'Single', 2:'Married', 3:'Widower',
-                                                           4:'Divorced', 5:'Facto Union', 6:'Legally Separated'}[x])
+                                                          4:'Divorced', 5:'Facto Union', 6:'Legally Separated'}[x])
     gender = st.selectbox("Jenis Kelamin", options=[1, 0], format_func=lambda x: 'Male' if x==1 else 'Female')
     age_at_enrollment = st.number_input("Usia saat Mendaftar", min_value=17, max_value=70, value=20)
-    nacionality = st.number_input("Kode Nasionalitas", min_value=1, max_value=109, value=1,
-                                   help="1=Portugal, dst. Lihat dokumentasi dataset")
+    
+    nacionality_dict = {
+        1: 'Portuguese', 2: 'German', 6: 'Spanish', 11: 'Italian', 13: 'Dutch',
+        14: 'English', 17: 'Lithuanian', 21: 'Angolan', 22: 'Cape Verdean',
+        24: 'Guinean', 25: 'Mozambican', 26: 'Santomean', 32: 'Turkish',
+        41: 'Brazilian', 62: 'Romanian', 100: 'Moldova (Republic of)',
+        101: 'Mexican', 103: 'Ukrainian', 105: 'Russian', 108: 'Cuban', 109: 'Colombian'
+    }
+    nacionality = st.selectbox("Nasionalitas", 
+                               options=list(nacionality_dict.keys()), 
+                               format_func=lambda x: nacionality_dict[x])
+                               
     displaced = st.selectbox("Displaced (tinggal jauh dari rumah)?", options=[0, 1],
                               format_func=lambda x: 'Ya' if x==1 else 'Tidak')
     international = st.selectbox("Mahasiswa Internasional?", options=[0, 1],
@@ -61,11 +71,36 @@ with col2:
                            }[x])
     daytime_evening = st.selectbox("Jenis Kelas", options=[1, 0],
                                     format_func=lambda x: 'Pagi/Siang' if x==1 else 'Malam')
-    application_mode = st.number_input("Mode Aplikasi Masuk", min_value=1, max_value=57, value=17,
-                                        help="Kode cara pendaftaran siswa")
-    application_order = st.number_input("Urutan Pilihan Program", min_value=0, max_value=9, value=1)
-    previous_qualification = st.number_input("Kode Kualifikasi Sebelumnya", min_value=1, max_value=43, value=1,
-                                              help="1=Secondary Education, dst.")
+                                    
+    app_mode_dict = {
+        1: '1st phase - general contingent', 2: 'Ordinance No. 612/93', 5: '1st phase - special contingent (Azores Island)',
+        7: 'Holders of other higher courses', 10: 'Ordinance No. 854-B/99', 15: 'International student (bachelor)',
+        16: '1st phase - special contingent (Madeira Island)', 17: '2nd phase - general contingent', 18: '3rd phase - general contingent',
+        26: 'Ordinance No. 533-A/99, item b2) (Different Plan)', 27: 'Ordinance No. 533-A/99, item b3 (Other Institution)',
+        39: 'Over 23 years old', 42: 'Transfer', 43: 'Change of course', 44: 'Technological specialization diploma holders',
+        51: 'Change of institution/course', 53: 'Short cycle diploma holders', 57: 'Change of institution/course (International)'
+    }
+    application_mode = st.selectbox("Mode Aplikasi Masuk", 
+                                    options=list(app_mode_dict.keys()), 
+                                    format_func=lambda x: app_mode_dict[x],
+                                    index=7) # Default ke 17 (2nd phase)
+
+    application_order = st.selectbox("Urutan Pilihan Program", options=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                                     format_func=lambda x: f"Pilihan ke-{x}" if x > 0 else "Pilihan ke-0 (Pertama)")
+    
+    prev_qual_dict = {
+        1: 'Secondary education', 2: "Higher education - bachelor's degree", 3: 'Higher education - degree',
+        4: "Higher education - master's", 5: 'Higher education - doctorate', 6: 'Frequency of higher education',
+        9: '12th year of schooling - not completed', 10: '11th year of schooling - not completed',
+        12: 'Other - 11th year of schooling', 14: '10th year of schooling', 15: '10th year of schooling - not completed',
+        19: 'Basic education 3rd cycle (9th/10th/11th year) or equiv.', 38: 'Basic education 2nd cycle (6th/7th/8th year) or equiv.',
+        39: 'Technological specialization course', 40: 'Higher education - degree (1st cycle)',
+        42: 'Professional higher technical course', 43: 'Higher education - master (2nd cycle)'
+    }
+    previous_qualification = st.selectbox("Kualifikasi Sebelumnya", 
+                                          options=list(prev_qual_dict.keys()), 
+                                          format_func=lambda x: prev_qual_dict[x])
+
     prev_qual_grade = st.slider("Nilai Kualifikasi Sebelumnya (0-200)", min_value=0.0, max_value=200.0, value=130.0, step=0.5)
     admission_grade = st.slider("Nilai Masuk (0-200)", min_value=0.0, max_value=200.0, value=130.0, step=0.5)
     tuition_fees = st.selectbox("Bayar SPP Tepat Waktu?", options=[1, 0],
@@ -79,12 +114,14 @@ st.markdown("**Informasi Orang Tua**")
 col3, col4 = st.columns(2)
 with col3:
     mothers_qualification = st.number_input("Kualifikasi Ibu (kode)", min_value=1, max_value=44, value=19,
-                                             help="1=Secondary Education, dst.")
+                                             help="Lihat dokumentasi dataset untuk daftar kode kualifikasi")
     mothers_occupation = st.number_input("Pekerjaan Ibu (kode)", min_value=0, max_value=194, value=5,
-                                          help="0=Student, dst.")
+                                          help="Lihat dokumentasi dataset untuk daftar kode pekerjaan")
 with col4:
-    fathers_qualification = st.number_input("Kualifikasi Ayah (kode)", min_value=1, max_value=44, value=19)
-    fathers_occupation = st.number_input("Pekerjaan Ayah (kode)", min_value=0, max_value=194, value=5)
+    fathers_qualification = st.number_input("Kualifikasi Ayah (kode)", min_value=1, max_value=44, value=19,
+                                            help="Lihat dokumentasi dataset untuk daftar kode kualifikasi")
+    fathers_occupation = st.number_input("Pekerjaan Ayah (kode)", min_value=0, max_value=194, value=5,
+                                         help="Lihat dokumentasi dataset untuk daftar kode pekerjaan")
 
 st.divider()
 st.subheader("Performa Semester 1")
