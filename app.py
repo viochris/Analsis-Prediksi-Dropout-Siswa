@@ -83,7 +83,7 @@ with col2:
     application_mode = st.selectbox("Mode Aplikasi Masuk", 
                                     options=list(app_mode_dict.keys()), 
                                     format_func=lambda x: app_mode_dict[x],
-                                    index=7) # Default ke 17 (2nd phase)
+                                    index=7) 
 
     application_order = st.selectbox("Urutan Pilihan Program", options=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                                      format_func=lambda x: f"Pilihan ke-{x}" if x > 0 else "Pilihan ke-0 (Pertama)")
@@ -111,17 +111,61 @@ with col2:
                                 format_func=lambda x: 'Ya' if x==1 else 'Tidak')
 
 st.markdown("**Informasi Orang Tua**")
+
+qual_dict = {
+    1: 'Secondary Education', 2: "Higher Education - Bachelor's Degree", 3: 'Higher Education - Degree',
+    4: "Higher Education - Master's", 5: 'Higher Education - Doctorate', 6: 'Frequency of Higher Education',
+    9: '12th Year of Schooling (Not Completed)', 10: '11th Year of Schooling (Not Completed)',
+    11: '7th Year (Old)', 12: 'Other - 11th Year of Schooling', 13: '2nd Year Extra Schooling',
+    14: '10th Year of Schooling', 15: '10th Year of Schooling (Not Completed)',
+    18: 'General Commerce Course', 19: 'Basic Education 3rd Cycle (9th/10th/11th Year)',
+    20: 'Complementary High School Course', 22: 'Technical-Professional Course',
+    25: 'Secretarial and Commerce Course', 26: '11th Year of Schooling', 27: '2nd Cycle of the General High School Course',
+    29: '9th Year of Schooling (Not Completed)', 30: '8th Year of Schooling', 31: 'General Course of Administration and Commerce',
+    33: 'Supplementary Accounting and Administration', 34: 'Unknown', 35: 'Can\'t Read or Write',
+    36: 'Can Read Without Having a 4th Year', 37: 'Basic Education 1st Cycle (4th/5th Year)',
+    38: 'Basic Education 2nd Cycle (6th/7th/8th Year)', 39: 'Technological Specialization Course',
+    40: 'Higher Education - Degree (1st Cycle)', 41: 'Specialized Higher Studies Course',
+    42: 'Professional Higher Technical Course', 43: 'Higher Education - Master (2nd Cycle)', 44: 'Higher Education - Doctorate (3rd Cycle)'
+}
+
+occ_dict = {
+    0: 'Student', 1: 'Legislative Power and Executive Bodies', 2: 'Specialists in Intellectual/Scientific Activities',
+    3: 'Intermediate Level Technicians', 4: 'Administrative Staff', 5: 'Personal Services, Security and Sellers',
+    6: 'Farmers and Skilled Agriculture Workers', 7: 'Skilled Workers in Industry and Construction',
+    8: 'Machine Operators and Assembly Workers', 9: 'Unskilled Workers', 10: 'Armed Forces Professions',
+    90: 'Other Situation', 99: '(Blank)', 101: 'Armed Forces Officers', 102: 'Armed Forces Sergeants',
+    103: 'Other Armed Forces Personnel', 112: 'Directors of Administrative Services', 114: 'Hotel/Restaurant Directors',
+    121: 'Specialists in Physical Sciences, Math, Engineering', 122: 'Health Professionals', 123: 'Teachers',
+    124: 'Specialists in Finance, Accounting, Admin', 125: 'ICT Specialists', 131: 'Science/Engineering Technicians',
+    132: 'Health Technicians', 134: 'Legal/Social/Cultural Technicians', 135: 'ICT Technicians',
+    141: 'Office Workers/Secretaries', 143: 'Data/Accounting Operators', 144: 'Other Administrative Support',
+    151: 'Personal Service Workers', 152: 'Sellers', 153: 'Personal Care Workers', 154: 'Protection/Security Services',
+    161: 'Market-Oriented Farmers', 163: 'Farmers/Animal Producers', 171: 'Skilled Construction Workers',
+    172: 'Skilled Metallurgy/Metalworking Workers', 174: 'Skilled Electricity/Electronics Workers',
+    175: 'Workers in Food, Wood, Clothing Industries', 181: 'Fixed Plant/Machine Operators', 182: 'Assembly Workers',
+    183: 'Vehicle Drivers/Mobile Equipment Operators', 192: 'Unskilled Agriculture/Fisheries Workers',
+    193: 'Unskilled Industry/Construction Workers', 194: 'Meal Preparation Assistants', 195: 'Street Vendors/Related'
+}
+
 col3, col4 = st.columns(2)
 with col3:
-    mothers_qualification = st.number_input("Kualifikasi Ibu (kode)", min_value=1, max_value=44, value=19,
-                                             help="Lihat dokumentasi dataset untuk daftar kode kualifikasi")
-    mothers_occupation = st.number_input("Pekerjaan Ibu (kode)", min_value=0, max_value=194, value=5,
-                                          help="Lihat dokumentasi dataset untuk daftar kode pekerjaan")
+    m_qual_opts = [1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 14, 18, 19, 22, 26, 27, 29, 30, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
+    m_occ_opts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 90, 99, 122, 123, 125, 131, 132, 134, 141, 143, 144, 151, 152, 153, 171, 173, 175, 191, 192, 193, 194]
+    
+    mothers_qualification = st.selectbox("Kualifikasi Ibu", options=m_qual_opts, index=12,
+                                         format_func=lambda x: f"[{x}] {qual_dict.get(x, 'Lainnya')}")
+    mothers_occupation = st.selectbox("Pekerjaan Ibu", options=m_occ_opts, index=5,
+                                      format_func=lambda x: f"[{x}] {occ_dict.get(x, 'Lainnya')}")
+
 with col4:
-    fathers_qualification = st.number_input("Kualifikasi Ayah (kode)", min_value=1, max_value=44, value=19,
-                                            help="Lihat dokumentasi dataset untuk daftar kode kualifikasi")
-    fathers_occupation = st.number_input("Pekerjaan Ayah (kode)", min_value=0, max_value=194, value=5,
-                                         help="Lihat dokumentasi dataset untuk daftar kode pekerjaan")
+    f_qual_opts = [1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 18, 19, 20, 22, 25, 26, 27, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
+    f_occ_opts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 90, 99, 101, 102, 103, 112, 114, 121, 122, 123, 124, 131, 132, 134, 135, 141, 143, 144, 151, 152, 153, 154, 161, 163, 171, 172, 174, 175, 181, 182, 183, 192, 193, 194, 195]
+
+    fathers_qualification = st.selectbox("Kualifikasi Ayah", options=f_qual_opts, index=13,
+                                         format_func=lambda x: f"[{x}] {qual_dict.get(x, 'Lainnya')}")
+    fathers_occupation = st.selectbox("Pekerjaan Ayah", options=f_occ_opts, index=5,
+                                      format_func=lambda x: f"[{x}] {occ_dict.get(x, 'Lainnya')}")
 
 st.divider()
 st.subheader("Performa Semester 1")
