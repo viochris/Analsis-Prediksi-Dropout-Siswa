@@ -32,13 +32,41 @@ Jaya Jaya Institut adalah institusi pendidikan tinggi yang telah berdiri sejak t
 
 **Sumber data:** [Students' Performance Dataset - Dicoding](https://raw.githubusercontent.com/dicodingacademy/dicoding_dataset/main/students_performance/data.csv)
 
-**Setup environment:**
+**Setup Environment:**
+Proyek ini dikembangkan dan diuji menggunakan **Python 3.12**. Sangat disarankan untuk menggunakan versi Python yang sama atau kompatibel untuk menghindari konflik *dependency*.
 
-```bash
-pip install -r requirements.txt
-```
+Berikut adalah langkah-langkah untuk menyiapkan *environment* dan menjalankan proyek ini secara lokal:
 
----
+1. **Clone/Download Repository**
+   Pastikan Anda sudah berada di dalam direktori proyek ini.
+   > 🔗 **Link Github:** [https://github.com/viochris/Analsis-Prediksi-Dropout-Siswa](https://github.com/viochris/Analsis-Prediksi-Dropout-Siswa)
+
+2. **Buat Virtual Environment**
+   Langkah ini penting untuk menjaga agar *library* proyek terisolasi. Jalankan perintah berikut di terminal:
+   ```bash
+   # Untuk pengguna Windows
+   python -m venv venv
+   
+   # Untuk pengguna Mac/Linux
+   python3 -m venv venv
+   ```
+
+3. **Aktifkan Virtual Environment**
+   ```bash
+   # Untuk pengguna Windows (Command Prompt)
+   venv\Scripts\activate
+   # Untuk pengguna Windows (Git Bash/PowerShell)
+   source venv/Scripts/activate
+   
+   # Untuk pengguna Mac/Linux
+   source venv/bin/activate
+   ```
+
+4. **Install Dependencies**
+   Setelah virtual environment aktif (terlihat tulisan `(venv)` di terminal), install semua *library* yang dibutuhkan:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## Business Dashboard
 
