@@ -78,11 +78,52 @@ Aplikasi akan berjalan di `http://localhost:8501`
 ### Cara Menggunakan Aplikasi
 
 1. Buka aplikasi di browser
-2. Isi data siswa: informasi pribadi, akademik, dan keuangan
-3. Masukkan performa semester 1 dan semester 2
-4. Klik tombol **"Prediksi Risiko Dropout"**
-5. Sistem akan menampilkan prediksi (Berisiko/Tidak Berisiko) beserta probabilitasnya
-6. Jika berisiko, sistem akan memberikan rekomendasi tindakan yang perlu dilakukan
+2. Isi **semua** data siswa: informasi pribadi, akademik, keuangan, data orang tua, performa semester 1 dan 2, serta kondisi ekonomi makro (total 36 fitur)
+3. Klik tombol **"Prediksi Risiko Dropout"**
+4. Sistem akan menampilkan prediksi (Berisiko/Tidak Berisiko) beserta probabilitasnya
+5. Jika berisiko, sistem akan memberikan rekomendasi tindakan yang perlu dilakukan
+
+---
+
+## Penjelasan Proses Pengolahan Data
+
+### Data Understanding
+
+Dataset berisi **4.424 data siswa** dengan **36 fitur** dan 1 kolom target (`Status`) yang memiliki 3 nilai: Graduate, Dropout, dan Enrolled.
+
+Sebelum membangun model, penting untuk memahami semua kelas yang ada:
+
+| Status    | Jumlah | Persentase |
+|-----------|--------|------------|
+| Graduate  | 2.209  | 49.9%      |
+| Dropout   | 1.421  | 32.1%      |
+| Enrolled  | 794    | 17.9%      |
+
+### Data Preparation
+
+Tujuan model adalah memprediksi apakah siswa akan **Dropout atau Graduate**. Oleh karena itu, pada tahap preparation dilakukan **filtering data** untuk hanya menyertakan siswa dengan status Dropout dan Graduate.
+
+**Alasan filtering Enrolled:**
+
+Siswa dengan status Enrolled masih aktif berkuliah dan belum memiliki outcome yang jelas (belum lulus atau dropout). Jika Enrolled ikut ditraining dengan encoding yang sama dengan Graduate (keduanya dijadikan kelas 0), maka target menjadi **ambigu** karena dua kelompok dengan karakteristik berbeda digabungkan dalam satu label. Ini akan menurunkan validitas dan performa model.
+
+**Hasil filtering:**
+
+- Sebelum: 4.424 baris
+- Setelah (hanya Dropout & Graduate): 3.630 baris
+- Target encoding: Dropout = 1, Graduate = 0
+
+### Fitur yang Digunakan
+
+Semua **36 fitur** digunakan dalam pemodelan, mencakup:
+- Informasi demografis (usia, jenis kelamin, status pernikahan, nasionalitas)
+- Informasi akademik (mode aplikasi, program studi, nilai masuk, kualifikasi sebelumnya)
+- Informasi keuangan (pembayaran SPP, status debtor, beasiswa)
+- Informasi keluarga (kualifikasi dan pekerjaan orang tua)
+- Performa akademik semester 1 dan 2 (unit terdaftar, lulus, nilai, evaluasi)
+- Kondisi ekonomi makro (pengangguran, inflasi, GDP)
+
+Jumlah fitur di Streamlit **sama persis** dengan jumlah fitur yang digunakan saat training (36 fitur).
 
 ---
 
@@ -102,9 +143,9 @@ Berdasarkan analisis data dan model machine learning yang dikembangkan, ditemuka
 
 4. **Beasiswa sebagai faktor protektif**: Hanya **9.4%** siswa dropout yang menerima beasiswa, dibandingkan **37.8%** pada kelompok Graduate
 
-5. **Usia saat mendaftar**: Siswa dropout rata-rata lebih tua (26.1 tahun) dibanding Graduate (21.8 tahun), mengindikasikan tanggung jawab di luar studi yang lebih besar
+5. **Usia saat mendaftar**: Siswa dropout rata-rata lebih tua (26.1 tahun) dibanding Graduate (21.8 tahun)
 
-6. Model **Random Forest** mencapai **accuracy 88.02%** dengan **AUC-ROC 0.9293** untuk prediksi dropout — menunjukkan model mampu memisahkan siswa berisiko dengan cukup baik
+6. Model **Random Forest** dilatih pada data Dropout dan Graduate (3.630 siswa) dengan seluruh **36 fitur**, menghasilkan performa yang valid karena target encoding tidak ambigu (hanya dua kelas yang jelas). Dengan akurasi 0.9284 dan AUC-ROC score 0.9711
 
 ### Rekomendasi Action Items
 
@@ -112,9 +153,8 @@ Berdasarkan analisis data dan model machine learning yang dikembangkan, ditemuka
 
 - **Program Bantuan Keuangan Proaktif**: Perluas beasiswa dan keringanan SPP bagi siswa yang mengalami kesulitan finansial. Monitoring status pembayaran SPP secara rutin dan hubungi siswa yang terlambat bayar sebelum situasinya memburuk
 
-- **Intervensi Akademik Semester 1**: Lakukan evaluasi akademik di pertengahan semester 1 (bukan hanya akhir semester) sehingga siswa yang mulai tertinggal bisa mendapat bantuan lebih awal — karena nilai semester 1 sudah sangat prediktif terhadap dropout
+- **Intervensi Akademik Semester 1**: Lakukan evaluasi akademik di pertengahan semester 1 sehingga siswa yang mulai tertinggal bisa mendapat bantuan lebih awal
 
-- **Program Dukungan untuk Mahasiswa Dewasa**: Buat program khusus untuk mahasiswa yang mendaftar di usia lebih tua (25+ tahun), seperti jadwal kelas yang fleksibel atau program part-time, mengingat kelompok ini memiliki risiko dropout lebih tinggi
+- **Program Dukungan untuk Mahasiswa Dewasa**: Buat program khusus untuk mahasiswa yang mendaftar di usia lebih tua (25+ tahun), seperti jadwal kelas yang fleksibel atau program part-time
 
-- **Perluasan Program Beasiswa**: Tingkatkan jumlah dan akses beasiswa mengingat perbedaan yang sangat besar antara penerima beasiswa di kelompok Graduate (37.8%) vs Dropout (9.4%). Beasiswa terbukti jadi faktor protektif yang kuat
-
+- **Perluasan Program Beasiswa**: Tingkatkan jumlah dan akses beasiswa mengingat perbedaan yang sangat besar antara penerima beasiswa di kelompok Graduate (37.8%) vs Dropout (9.4%)
