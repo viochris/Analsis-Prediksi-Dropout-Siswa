@@ -70,14 +70,18 @@ Berikut adalah langkah-langkah untuk menyiapkan *environment* dan menjalankan pr
 
 ## Business Dashboard
 
-Dashboard dibuat menggunakan **Google Looker Studio** untuk memantau performa siswa secara visual dan interaktif. Dashboard menampilkan:
+Dashboard dibuat menggunakan **Google Looker Studio** untuk memantau performa siswa secara visual dan interaktif.
 
-- Distribusi status siswa (Graduate 49.9%, Dropout 32.1%, Enrolled 17.9%)
+**Catatan penting:** Dataset yang digunakan untuk dashboard hanya mencakup siswa dengan status **Dropout** dan **Graduate** (tanpa Enrolled). Hal ini karena siswa Enrolled masih aktif berkuliah dan belum memiliki outcome akhir yang jelas, sehingga memasukkan mereka berpotensi menimbulkan bias dalam analisis dan menyesatkan interpretasi.
+
+Dashboard menampilkan:
+
+- Distribusi status siswa (Graduate vs Dropout)
 - Persentase pembayaran SPP tepat waktu per status
-- Distribusi usia saat pendaftaran per status
+- Distribusi usia saat pendaftaran per status (dengan legend warna yang jelas)
 - Rata-rata nilai semester 1 & 2 per status
 - Persentase penerima beasiswa per status
-- Rata-rata unit yang lulus per semester per status
+- Rata-rata jumlah mata kuliah yang lulus per semester per status
 
 🔗 **Link Dashboard:** [https://lookerstudio.google.com/reporting/33f6debd-60a5-4541-881d-bfb4f279cfbb](https://lookerstudio.google.com/reporting/33f6debd-60a5-4541-881d-bfb4f279cfbb)
 
@@ -141,6 +145,10 @@ Siswa dengan status Enrolled masih aktif berkuliah dan belum memiliki outcome ya
 - Setelah (hanya Dropout & Graduate): 3.630 baris
 - Target encoding: Dropout = 1, Graduate = 0
 
+**Scaling data:**
+
+Proses scaling menggunakan `StandardScaler` dilakukan pada tahap Data Preparation (sebelum modeling), bukan di dalam tahap Modeling. Ini sesuai dengan praktik yang baik karena scaling merupakan bagian dari preprocessing data.
+
 ### Fitur yang Digunakan
 
 Semua **36 fitur** digunakan dalam pemodelan, mencakup:
@@ -152,6 +160,15 @@ Semua **36 fitur** digunakan dalam pemodelan, mencakup:
 - Kondisi ekonomi makro (pengangguran, inflasi, GDP)
 
 Jumlah fitur di Streamlit **sama persis** dengan jumlah fitur yang digunakan saat training (36 fitur).
+
+### Alur Notebook
+
+| Tahap | Isi |
+|-------|-----|
+| **Data Understanding** | EDA, distribusi, korelasi, visualisasi |
+| **Data Preparation** | Filter Dropout & Graduate, encoding target, split train/test, **scaling (StandardScaler)**, export CSV dashboard |
+| **Modeling** | Pemilihan algoritma, penentuan hyperparameter, training model |
+| **Evaluation** | Accuracy, AUC-ROC, confusion matrix, feature importance |
 
 ---
 

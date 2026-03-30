@@ -32,27 +32,27 @@ with col1:
     st.markdown("**Informasi Pribadi**")
     marital_status = st.selectbox("Status Pernikahan",
                                    options=[1, 2, 3, 4, 5, 6],
-                                   format_func=lambda x: {1:'Single', 2:'Married', 3:'Widower',
-                                                          4:'Divorced', 5:'Facto Union', 6:'Legally Separated'}[x])
-    gender = st.selectbox("Jenis Kelamin", options=[1, 0], format_func=lambda x: 'Male' if x==1 else 'Female')
-    age_at_enrollment = st.number_input("Usia saat Mendaftar", min_value=17, max_value=70, value=20)
-    
+                                   format_func=lambda x: {1:'Lajang (Single)', 2:'Menikah (Married)', 3:'Duda/Janda (Widower)',
+                                                          4:'Cerai (Divorced)', 5:'Kumpul Kebo (Facto Union)', 6:'Pisah Legal (Legally Separated)'}[x])
+    gender = st.selectbox("Jenis Kelamin", options=[1, 0], format_func=lambda x: 'Laki-laki' if x==1 else 'Perempuan')
+    age_at_enrollment = st.number_input("Usia saat Mendaftar (tahun)", min_value=17, max_value=70, value=20)
+
     nacionality_dict = {
-        1: 'Portuguese', 2: 'German', 6: 'Spanish', 11: 'Italian', 13: 'Dutch',
-        14: 'English', 17: 'Lithuanian', 21: 'Angolan', 22: 'Cape Verdean',
-        24: 'Guinean', 25: 'Mozambican', 26: 'Santomean', 32: 'Turkish',
-        41: 'Brazilian', 62: 'Romanian', 100: 'Moldova (Republic of)',
-        101: 'Mexican', 103: 'Ukrainian', 105: 'Russian', 108: 'Cuban', 109: 'Colombian'
+        1: 'Portugal', 2: 'Jerman', 6: 'Spanyol', 11: 'Italia', 13: 'Belanda',
+        14: 'Inggris', 17: 'Lithuania', 21: 'Angola', 22: 'Tanjung Verde',
+        24: 'Guinea', 25: 'Mozambik', 26: 'Sao Tome', 32: 'Turki',
+        41: 'Brasil', 62: 'Rumania', 100: 'Moldova',
+        101: 'Meksiko', 103: 'Ukraina', 105: 'Rusia', 108: 'Kuba', 109: 'Kolombia'
     }
-    nacionality = st.selectbox("Nasionalitas", 
-                               options=list(nacionality_dict.keys()), 
+    nacionality = st.selectbox("Kewarganegaraan",
+                               options=list(nacionality_dict.keys()),
                                format_func=lambda x: nacionality_dict[x])
-                               
-    displaced = st.selectbox("Displaced (tinggal jauh dari rumah)?", options=[0, 1],
+
+    displaced = st.selectbox("Perantau (tinggal jauh dari kota asal)?", options=[0, 1],
                               format_func=lambda x: 'Ya' if x==1 else 'Tidak')
-    international = st.selectbox("Mahasiswa Internasional?", options=[0, 1],
+    international = st.selectbox("Mahasiswa Internasional (dari luar negeri)?", options=[0, 1],
                                   format_func=lambda x: 'Ya' if x==1 else 'Tidak')
-    educational_special_needs = st.selectbox("Kebutuhan Pendidikan Khusus?", options=[0, 1],
+    educational_special_needs = st.selectbox("Memiliki Kebutuhan Pendidikan Khusus?", options=[0, 1],
                                               format_func=lambda x: 'Ya' if x==1 else 'Tidak')
 
 with col2:
@@ -61,147 +61,191 @@ with col2:
                            options=[33, 171, 8014, 9003, 9070, 9085, 9119, 9130,
                                     9147, 9238, 9254, 9500, 9556, 9670, 9773, 9853, 9991],
                            format_func=lambda x: {
-                               33:'Biofuel Production Technologies', 171:'Animation & Multimedia Design',
-                               8014:'Social Service (Evening)', 9003:'Agronomy', 9070:'Communication Design',
-                               9085:'Veterinary Nursing', 9119:'Informatics Engineering', 9130:'Equinculture',
-                               9147:'Management', 9238:'Social Service', 9254:'Tourism', 9500:'Nursing',
-                               9556:'Oral Hygiene', 9670:'Advertising & Marketing Management',
-                               9773:'Journalism & Communication', 9853:'Basic Education',
-                               9991:'Management (Evening)'
+                               33:'Teknologi Produksi Biofuel', 171:'Animasi & Desain Multimedia',
+                               8014:'Layanan Sosial (Malam)', 9003:'Agronomi', 9070:'Desain Komunikasi',
+                               9085:'Keperawatan Hewan', 9119:'Teknik Informatika', 9130:'Ekuikultur',
+                               9147:'Manajemen', 9238:'Layanan Sosial', 9254:'Pariwisata', 9500:'Keperawatan',
+                               9556:'Kebersihan Mulut', 9670:'Manajemen Periklanan & Pemasaran',
+                               9773:'Jurnalisme & Komunikasi', 9853:'Pendidikan Dasar',
+                               9991:'Manajemen (Malam)'
                            }[x])
-    daytime_evening = st.selectbox("Jenis Kelas", options=[1, 0],
+    daytime_evening = st.selectbox("Waktu Kuliah", options=[1, 0],
                                     format_func=lambda x: 'Pagi/Siang' if x==1 else 'Malam')
-                                    
-    app_mode_dict = {
-        1: '1st phase - general contingent', 2: 'Ordinance No. 612/93', 5: '1st phase - special contingent (Azores Island)',
-        7: 'Holders of other higher courses', 10: 'Ordinance No. 854-B/99', 15: 'International student (bachelor)',
-        16: '1st phase - special contingent (Madeira Island)', 17: '2nd phase - general contingent', 18: '3rd phase - general contingent',
-        26: 'Ordinance No. 533-A/99, item b2) (Different Plan)', 27: 'Ordinance No. 533-A/99, item b3 (Other Institution)',
-        39: 'Over 23 years old', 42: 'Transfer', 43: 'Change of course', 44: 'Technological specialization diploma holders',
-        51: 'Change of institution/course', 53: 'Short cycle diploma holders', 57: 'Change of institution/course (International)'
-    }
-    application_mode = st.selectbox("Mode Aplikasi Masuk", 
-                                    options=list(app_mode_dict.keys()), 
-                                    format_func=lambda x: app_mode_dict[x],
-                                    index=7) 
 
-    application_order = st.selectbox("Urutan Pilihan Program", options=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-                                     format_func=lambda x: f"Pilihan ke-{x}" if x > 0 else "Pilihan ke-0 (Pertama)")
-    
-    prev_qual_dict = {
-        1: 'Secondary education', 2: "Higher education - bachelor's degree", 3: 'Higher education - degree',
-        4: "Higher education - master's", 5: 'Higher education - doctorate', 6: 'Frequency of higher education',
-        9: '12th year of schooling - not completed', 10: '11th year of schooling - not completed',
-        12: 'Other - 11th year of schooling', 14: '10th year of schooling', 15: '10th year of schooling - not completed',
-        19: 'Basic education 3rd cycle (9th/10th/11th year) or equiv.', 38: 'Basic education 2nd cycle (6th/7th/8th year) or equiv.',
-        39: 'Technological specialization course', 40: 'Higher education - degree (1st cycle)',
-        42: 'Professional higher technical course', 43: 'Higher education - master (2nd cycle)'
+    app_mode_dict = {
+        1: '1st phase - general contingent', 2: 'Ordinance No. 612/93',
+        5: '1st phase - special contingent (Azores Island)',
+        7: 'Holders of other higher courses', 10: 'Ordinance No. 854-B/99',
+        15: 'International student (bachelor)',
+        16: '1st phase - special contingent (Madeira Island)',
+        17: '2nd phase - general contingent', 18: '3rd phase - general contingent',
+        26: 'Ordinance No. 533-A/99, item b2)',
+        27: 'Ordinance No. 533-A/99, item b3 (Other Institution)',
+        39: 'Over 23 years old', 42: 'Transfer', 43: 'Change of course',
+        44: 'Technological specialization diploma holders',
+        51: 'Change of institution/course',
+        53: 'Short cycle diploma holders',
+        57: 'Change of institution/course (International)'
     }
-    previous_qualification = st.selectbox("Kualifikasi Sebelumnya", 
-                                          options=list(prev_qual_dict.keys()), 
+    application_mode = st.selectbox("Jalur Pendaftaran Masuk",
+                                    options=list(app_mode_dict.keys()),
+                                    format_func=lambda x: app_mode_dict[x],
+                                    index=7)
+
+    application_order = st.selectbox("Urutan Pilihan Program Studi",
+                                     options=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                                     format_func=lambda x: f"Pilihan ke-{x}" if x > 0 else "Pilihan Pertama (0)")
+
+    prev_qual_dict = {
+        1: 'SMA/Sederajat (Secondary Education)',
+        2: "S1 - Sarjana (Bachelor's Degree)",
+        3: 'S1 - Gelar Akademik (Degree)',
+        4: "S2 - Magister (Master's)",
+        5: 'S3 - Doktor (Doctorate)',
+        6: 'Sedang Menempuh Pendidikan Tinggi',
+        9: 'Kelas 12 - Tidak Lulus',
+        10: 'Kelas 11 - Tidak Lulus',
+        12: 'Lainnya - Kelas 11',
+        14: 'Kelas 10',
+        15: 'Kelas 10 - Tidak Lulus',
+        19: 'Pendidikan Dasar Siklus 3 (Setara SMP/SMA)',
+        38: 'Pendidikan Dasar Siklus 2 (Setara SD-SMP)',
+        39: 'Kursus Spesialisasi Teknologi',
+        40: 'Pendidikan Tinggi - Sarjana (Siklus 1)',
+        42: 'Kursus Teknik Tinggi Profesional',
+        43: 'Pendidikan Tinggi - Magister (Siklus 2)'
+    }
+    previous_qualification = st.selectbox("Pendidikan Terakhir Sebelum Masuk",
+                                          options=list(prev_qual_dict.keys()),
                                           format_func=lambda x: prev_qual_dict[x])
 
-    prev_qual_grade = st.slider("Nilai Kualifikasi Sebelumnya (0-200)", min_value=0.0, max_value=200.0, value=130.0, step=0.5)
-    admission_grade = st.slider("Nilai Masuk (0-200)", min_value=0.0, max_value=200.0, value=130.0, step=0.5)
-    tuition_fees = st.selectbox("Bayar SPP Tepat Waktu?", options=[1, 0],
+    prev_qual_grade = st.slider("Nilai Ijazah/Kualifikasi Sebelumnya (0–200)", min_value=0.0, max_value=200.0, value=130.0, step=0.5)
+    admission_grade = st.slider("Nilai Masuk / Seleksi Penerimaan (0–200)", min_value=0.0, max_value=200.0, value=130.0, step=0.5)
+    tuition_fees = st.selectbox("Uang Kuliah (SPP) Dibayar Tepat Waktu?", options=[1, 0],
                                  format_func=lambda x: 'Ya' if x==1 else 'Tidak')
-    debtor = st.selectbox("Memiliki Hutang?", options=[0, 1],
+    debtor = st.selectbox("Memiliki Tunggakan/Hutang ke Kampus?", options=[0, 1],
                           format_func=lambda x: 'Ya' if x==1 else 'Tidak')
     scholarship = st.selectbox("Penerima Beasiswa?", options=[0, 1],
                                 format_func=lambda x: 'Ya' if x==1 else 'Tidak')
 
-st.markdown("**Informasi Orang Tua**")
+st.markdown("**Latar Belakang Pendidikan & Pekerjaan Orang Tua**")
 
 qual_dict = {
-    1: 'Secondary Education', 2: "Higher Education - Bachelor's Degree", 3: 'Higher Education - Degree',
-    4: "Higher Education - Master's", 5: 'Higher Education - Doctorate', 6: 'Frequency of Higher Education',
-    9: '12th Year of Schooling (Not Completed)', 10: '11th Year of Schooling (Not Completed)',
-    11: '7th Year (Old)', 12: 'Other - 11th Year of Schooling', 13: '2nd Year Extra Schooling',
-    14: '10th Year of Schooling', 15: '10th Year of Schooling (Not Completed)',
-    18: 'General Commerce Course', 19: 'Basic Education 3rd Cycle (9th/10th/11th Year)',
-    20: 'Complementary High School Course', 22: 'Technical-Professional Course',
-    25: 'Secretarial and Commerce Course', 26: '11th Year of Schooling', 27: '2nd Cycle of the General High School Course',
-    29: '9th Year of Schooling (Not Completed)', 30: '8th Year of Schooling', 31: 'General Course of Administration and Commerce',
-    33: 'Supplementary Accounting and Administration', 34: 'Unknown', 35: 'Can\'t Read or Write',
-    36: 'Can Read Without Having a 4th Year', 37: 'Basic Education 1st Cycle (4th/5th Year)',
-    38: 'Basic Education 2nd Cycle (6th/7th/8th Year)', 39: 'Technological Specialization Course',
-    40: 'Higher Education - Degree (1st Cycle)', 41: 'Specialized Higher Studies Course',
-    42: 'Professional Higher Technical Course', 43: 'Higher Education - Master (2nd Cycle)', 44: 'Higher Education - Doctorate (3rd Cycle)'
+    1: 'SMA/Sederajat', 2: "S1 Sarjana", 3: 'Gelar Akademik',
+    4: "S2 Magister", 5: 'S3 Doktor', 6: 'Sedang Kuliah',
+    9: 'Kelas 12 Tidak Lulus', 10: 'Kelas 11 Tidak Lulus',
+    11: 'Tahun ke-7 (Lama)', 12: 'Lainnya - Kelas 11', 13: 'Tambahan 2 Tahun',
+    14: 'Kelas 10', 15: 'Kelas 10 Tidak Lulus',
+    18: 'Kursus Perdagangan Umum', 19: 'Pendidikan Dasar Siklus 3 (Setara SMP)',
+    20: 'Kursus SMA Komplementer', 22: 'Kursus Teknik-Profesional',
+    25: 'Kursus Sekretaris & Perdagangan', 26: 'Kelas 11', 27: 'Siklus 2 SMA Umum',
+    29: 'Kelas 9 Tidak Lulus', 30: 'Kelas 8', 31: 'Kursus Admin & Perdagangan',
+    33: 'Akuntansi & Admin Lanjutan', 34: 'Tidak Diketahui',
+    35: 'Tidak Bisa Baca/Tulis', 36: 'Bisa Baca Tanpa Ijazah Kelas 4',
+    37: 'Pendidikan Dasar Siklus 1 (Setara SD)',
+    38: 'Pendidikan Dasar Siklus 2 (Setara SD-SMP)',
+    39: 'Kursus Spesialisasi Teknologi', 40: 'Sarjana (Siklus 1)',
+    41: 'Studi Tinggi Khusus', 42: 'Kursus Teknik Tinggi Profesional',
+    43: 'Magister (Siklus 2)', 44: 'Doktor (Siklus 3)'
 }
 
 occ_dict = {
-    0: 'Student', 1: 'Legislative Power and Executive Bodies', 2: 'Specialists in Intellectual/Scientific Activities',
-    3: 'Intermediate Level Technicians', 4: 'Administrative Staff', 5: 'Personal Services, Security and Sellers',
-    6: 'Farmers and Skilled Agriculture Workers', 7: 'Skilled Workers in Industry and Construction',
-    8: 'Machine Operators and Assembly Workers', 9: 'Unskilled Workers', 10: 'Armed Forces Professions',
-    90: 'Other Situation', 99: '(Blank)', 101: 'Armed Forces Officers', 102: 'Armed Forces Sergeants',
-    103: 'Other Armed Forces Personnel', 112: 'Directors of Administrative Services', 114: 'Hotel/Restaurant Directors',
-    121: 'Specialists in Physical Sciences, Math, Engineering', 122: 'Health Professionals', 123: 'Teachers',
-    124: 'Specialists in Finance, Accounting, Admin', 125: 'ICT Specialists', 131: 'Science/Engineering Technicians',
-    132: 'Health Technicians', 134: 'Legal/Social/Cultural Technicians', 135: 'ICT Technicians',
-    141: 'Office Workers/Secretaries', 143: 'Data/Accounting Operators', 144: 'Other Administrative Support',
-    151: 'Personal Service Workers', 152: 'Sellers', 153: 'Personal Care Workers', 154: 'Protection/Security Services',
-    161: 'Market-Oriented Farmers', 163: 'Farmers/Animal Producers', 171: 'Skilled Construction Workers',
-    172: 'Skilled Metallurgy/Metalworking Workers', 174: 'Skilled Electricity/Electronics Workers',
-    175: 'Workers in Food, Wood, Clothing Industries', 181: 'Fixed Plant/Machine Operators', 182: 'Assembly Workers',
-    183: 'Vehicle Drivers/Mobile Equipment Operators', 192: 'Unskilled Agriculture/Fisheries Workers',
-    193: 'Unskilled Industry/Construction Workers', 194: 'Meal Preparation Assistants', 195: 'Street Vendors/Related'
+    0: 'Mahasiswa/Pelajar', 1: 'Pejabat Legislatif/Eksekutif',
+    2: 'Tenaga Ahli Intelektual/Ilmiah', 3: 'Teknisi Tingkat Menengah',
+    4: 'Staf Administrasi', 5: 'Pekerja Jasa, Keamanan & Penjualan',
+    6: 'Petani & Pekerja Pertanian', 7: 'Pekerja Terampil Industri & Konstruksi',
+    8: 'Operator Mesin & Perakitan', 9: 'Pekerja Tidak Terampil',
+    10: 'Profesi Militer', 90: 'Situasi Lain', 99: '(Kosong/Tidak Ada Data)',
+    101: 'Perwira Militer', 102: 'Sersan Militer', 103: 'Personel Militer Lainnya',
+    112: 'Direktur Layanan Administratif', 114: 'Direktur Hotel/Restoran',
+    121: 'Ahli Fisika, Matematika, Teknik', 122: 'Tenaga Kesehatan Profesional',
+    123: 'Guru/Pengajar', 124: 'Ahli Keuangan, Akuntansi, Admin',
+    125: 'Spesialis TIK', 131: 'Teknisi Sains/Teknik', 132: 'Teknisi Kesehatan',
+    134: 'Teknisi Hukum/Sosial/Budaya', 135: 'Teknisi TIK',
+    141: 'Staf Kantor/Sekretaris', 143: 'Operator Data/Akuntansi',
+    144: 'Staf Administrasi Lainnya', 151: 'Pekerja Layanan Pribadi',
+    152: 'Tenaga Penjual', 153: 'Pekerja Perawatan Pribadi',
+    154: 'Petugas Keamanan/Perlindungan', 161: 'Petani Berorientasi Pasar',
+    163: 'Peternak', 171: 'Pekerja Konstruksi Terampil',
+    172: 'Pekerja Metalurgi Terampil', 174: 'Pekerja Listrik/Elektronik Terampil',
+    175: 'Pekerja Industri Makanan, Kayu, Pakaian',
+    181: 'Operator Pabrik/Mesin Stasioner', 182: 'Pekerja Perakitan',
+    183: 'Pengemudi/Operator Kendaraan', 192: 'Pekerja Tidak Terampil Pertanian/Perikanan',
+    193: 'Pekerja Tidak Terampil Industri/Konstruksi',
+    194: 'Asisten Persiapan Makanan', 195: 'Pedagang Kaki Lima'
 }
 
 col3, col4 = st.columns(2)
 with col3:
     m_qual_opts = [1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 14, 18, 19, 22, 26, 27, 29, 30, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
     m_occ_opts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 90, 99, 122, 123, 125, 131, 132, 134, 141, 143, 144, 151, 152, 153, 171, 173, 175, 191, 192, 193, 194]
-    
-    mothers_qualification = st.selectbox("Kualifikasi Ibu", options=m_qual_opts, index=12,
-                                         format_func=lambda x: f"[{x}] {qual_dict.get(x, 'Lainnya')}")
-    mothers_occupation = st.selectbox("Pekerjaan Ibu", options=m_occ_opts, index=5,
-                                      format_func=lambda x: f"[{x}] {occ_dict.get(x, 'Lainnya')}")
+
+    mothers_qualification = st.selectbox("Pendidikan Terakhir Ibu",
+                                         options=m_qual_opts, index=12,
+                                         format_func=lambda x: qual_dict.get(x, f'Kode {x}'))
+    mothers_occupation = st.selectbox("Pekerjaan Ibu",
+                                      options=m_occ_opts, index=5,
+                                      format_func=lambda x: occ_dict.get(x, f'Kode {x}'))
 
 with col4:
     f_qual_opts = [1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 18, 19, 20, 22, 25, 26, 27, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
     f_occ_opts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 90, 99, 101, 102, 103, 112, 114, 121, 122, 123, 124, 131, 132, 134, 135, 141, 143, 144, 151, 152, 153, 154, 161, 163, 171, 172, 174, 175, 181, 182, 183, 192, 193, 194, 195]
 
-    fathers_qualification = st.selectbox("Kualifikasi Ayah", options=f_qual_opts, index=13,
-                                         format_func=lambda x: f"[{x}] {qual_dict.get(x, 'Lainnya')}")
-    fathers_occupation = st.selectbox("Pekerjaan Ayah", options=f_occ_opts, index=5,
-                                      format_func=lambda x: f"[{x}] {occ_dict.get(x, 'Lainnya')}")
+    fathers_qualification = st.selectbox("Pendidikan Terakhir Ayah",
+                                         options=f_qual_opts, index=13,
+                                         format_func=lambda x: qual_dict.get(x, f'Kode {x}'))
+    fathers_occupation = st.selectbox("Pekerjaan Ayah",
+                                      options=f_occ_opts, index=5,
+                                      format_func=lambda x: occ_dict.get(x, f'Kode {x}'))
 
 st.divider()
-st.subheader("Performa Semester 1")
+st.subheader("Performa Akademik Semester 1")
 col5, col6 = st.columns(2)
 
 with col5:
-    cu1_credited = st.number_input("Unit Credited Sem. 1", min_value=0, max_value=20, value=0)
-    cu1_enrolled = st.number_input("Unit Terdaftar Sem. 1", min_value=0, max_value=30, value=6)
-    cu1_evaluations = st.number_input("Evaluasi Sem. 1", min_value=0, max_value=40, value=6)
+    cu1_credited = st.number_input("Mata Kuliah yang Di-kredit (Sem. 1)", min_value=0, max_value=20, value=0,
+                                    help="Jumlah mata kuliah yang diakui dari institusi/program sebelumnya")
+    cu1_enrolled = st.number_input("Mata Kuliah yang Diambil (Sem. 1)", min_value=0, max_value=30, value=6,
+                                    help="Jumlah mata kuliah yang didaftarkan di semester 1")
+    cu1_evaluations = st.number_input("Jumlah Ujian/Evaluasi (Sem. 1)", min_value=0, max_value=40, value=6,
+                                       help="Jumlah evaluasi/ujian yang diikuti di semester 1")
 
 with col6:
-    cu1_approved = st.number_input("Unit Lulus Sem. 1", min_value=0, max_value=30, value=5)
-    cu1_grade = st.slider("Nilai Rata-rata Sem. 1 (0-20)", min_value=0.0, max_value=20.0, value=12.0, step=0.1)
-    cu1_no_eval = st.number_input("Unit Tanpa Evaluasi Sem. 1", min_value=0, max_value=20, value=0)
+    cu1_approved = st.number_input("Mata Kuliah yang Lulus (Sem. 1)", min_value=0, max_value=30, value=5,
+                                    help="Jumlah mata kuliah yang berhasil lulus di semester 1")
+    cu1_grade = st.slider("Nilai Rata-rata Semester 1 (0–20)", min_value=0.0, max_value=20.0, value=12.0, step=0.1)
+    cu1_no_eval = st.number_input("Mata Kuliah Tanpa Evaluasi (Sem. 1)", min_value=0, max_value=20, value=0,
+                                   help="Jumlah mata kuliah yang tidak mengikuti evaluasi")
 
-st.subheader("Performa Semester 2")
+st.subheader("Performa Akademik Semester 2")
 col7, col8 = st.columns(2)
 
 with col7:
-    cu2_credited = st.number_input("Unit Credited Sem. 2", min_value=0, max_value=20, value=0)
-    cu2_enrolled = st.number_input("Unit Terdaftar Sem. 2", min_value=0, max_value=30, value=6)
-    cu2_evaluations = st.number_input("Evaluasi Sem. 2", min_value=0, max_value=40, value=6)
+    cu2_credited = st.number_input("Mata Kuliah yang Di-kredit (Sem. 2)", min_value=0, max_value=20, value=0,
+                                    help="Jumlah mata kuliah yang diakui dari institusi/program sebelumnya")
+    cu2_enrolled = st.number_input("Mata Kuliah yang Diambil (Sem. 2)", min_value=0, max_value=30, value=6,
+                                    help="Jumlah mata kuliah yang didaftarkan di semester 2")
+    cu2_evaluations = st.number_input("Jumlah Ujian/Evaluasi (Sem. 2)", min_value=0, max_value=40, value=6,
+                                       help="Jumlah evaluasi/ujian yang diikuti di semester 2")
 
 with col8:
-    cu2_approved = st.number_input("Unit Lulus Sem. 2", min_value=0, max_value=30, value=5)
-    cu2_grade = st.slider("Nilai Rata-rata Sem. 2 (0-20)", min_value=0.0, max_value=20.0, value=12.0, step=0.1)
-    cu2_no_eval = st.number_input("Unit Tanpa Evaluasi Sem. 2", min_value=0, max_value=20, value=0)
+    cu2_approved = st.number_input("Mata Kuliah yang Lulus (Sem. 2)", min_value=0, max_value=30, value=5,
+                                    help="Jumlah mata kuliah yang berhasil lulus di semester 2")
+    cu2_grade = st.slider("Nilai Rata-rata Semester 2 (0–20)", min_value=0.0, max_value=20.0, value=12.0, step=0.1)
+    cu2_no_eval = st.number_input("Mata Kuliah Tanpa Evaluasi (Sem. 2)", min_value=0, max_value=20, value=0,
+                                   help="Jumlah mata kuliah yang tidak mengikuti evaluasi")
 
 st.divider()
-st.subheader("Kondisi Ekonomi Makro")
+st.subheader("Kondisi Ekonomi Makro (Saat Siswa Terdaftar)")
 col9, col10 = st.columns(2)
 with col9:
-    unemployment_rate = st.number_input("Tingkat Pengangguran (%)", min_value=0.0, max_value=25.0, value=11.1, step=0.1)
-    inflation_rate = st.number_input("Tingkat Inflasi (%)", min_value=-5.0, max_value=10.0, value=1.4, step=0.1)
+    unemployment_rate = st.number_input("Tingkat Pengangguran (%)", min_value=0.0, max_value=25.0, value=11.1, step=0.1,
+                                         help="Persentase tingkat pengangguran nasional saat siswa mendaftar")
+    inflation_rate = st.number_input("Tingkat Inflasi (%)", min_value=-5.0, max_value=10.0, value=1.4, step=0.1,
+                                      help="Persentase inflasi nasional saat siswa mendaftar")
 with col10:
-    gdp = st.number_input("GDP", min_value=-5.0, max_value=5.0, value=1.74, step=0.01)
+    gdp = st.number_input("Pertumbuhan GDP (%)", min_value=-5.0, max_value=5.0, value=1.74, step=0.01,
+                           help="Pertumbuhan ekonomi (GDP) nasional saat siswa mendaftar")
 
 if st.button("🔍 Prediksi Risiko Dropout", type="primary", use_container_width=True):
     # build input dict sesuai urutan feature_names dari model
